@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-r##w=wiama9!(jv4c7i&))mbr26h6$hb56znela*v_^buhwql!'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -17,9 +17,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'base.apps.BaseConfig',
-
     'rest_framework',
+    'base.apps.BaseConfig',
+    'api'
+
 ]
 
 AUTH_USER_MODEL = 'base.User'
