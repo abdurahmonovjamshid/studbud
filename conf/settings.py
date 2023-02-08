@@ -7,7 +7,6 @@ SECRET_KEY = 'django-insecure-r##w=wiama9!(jv4c7i&))mbr26h6$hb56znela*v_^buhwql!
 
 DEBUG = False
 
-
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -19,6 +18,8 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
+
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'base.User'
