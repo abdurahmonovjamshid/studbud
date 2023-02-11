@@ -1,4 +1,4 @@
-from base.models import Room, Topic
+from base.models import Room, Topic, Message
 from rest_framework import serializers
 
 
@@ -27,3 +27,17 @@ class RoomSerializler(serializers.ModelSerializer):
         instance.description = description
         instance.save()
         return instance
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = '__all__'
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Message
+        fields = '__all__'
