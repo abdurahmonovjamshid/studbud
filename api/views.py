@@ -1,8 +1,11 @@
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from base.models import Room, Topic, Message
 from .serializers import RoomSerializler, TopicSerializer, MessageSerializer
 from rest_framework import permissions
-from .permissions import RoomOwnerOrReadonly, MessageOwnerOrReadonly
+from .permissions import RoomOwnerOrReadonly, MessageOwnerOrReadonly, IsAdminOrReadOnly
 
 
 class RoomListCreateView(generics.ListCreateAPIView):
@@ -16,9 +19,22 @@ class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (RoomOwnerOrReadonly,)
 
 
-class TopicListView(generics.ListAPIView):
+class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+    permission_classes = (IsAdminOrReadOnly,)
+
+    @action(methods=['get'], detail=True)
+    def rooms(self, *args, **kwargs):
+        pk = kwargs['pk']
+        try:
+            topic = Topic.objects.get(pk=pk)
+        except Topic.DoesNotExist:
+            topic = None
+        if not topic:
+            return Response('not found', status=400)
+        serializer = TopicSerializer(topic.room_set.all(), many=True)
+        return Response(serializer.data)
 
 
 class MessageViewSet(viewsets.ModelViewSet):
