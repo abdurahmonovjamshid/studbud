@@ -1,11 +1,27 @@
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from base.models import Room, Topic, Message
 from .serializers import RoomSerializler, TopicSerializer, MessageSerializer
 from rest_framework import permissions
 from .permissions import RoomOwnerOrReadonly, MessageOwnerOrReadonly, IsAdminOrReadOnly
+
+
+class RoomMessages(APIView):
+    def get(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        try:
+            room = Room.objects.get(pk=pk)
+            print(room)
+        except Room.DoesNotExist:
+            room = None
+        if not room:
+            return Response('not found', status=400)
+        serializer = MessageSerializer(room.message_set.all(), many=True)
+
+        return Response(serializer.data)
 
 
 class RoomListCreateView(generics.ListCreateAPIView):

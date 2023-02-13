@@ -12,6 +12,7 @@ router2.register('topic', views.TopicViewSet)
 urlpatterns = [
     path('room/', views.RoomListCreateView.as_view()),
     path('room/<int:pk>/', views.RoomDetailView.as_view()),
+    path('room/<int:pk>/messages', views.RoomMessages.as_view()),
     path('', include(router2.urls)),
     path('', include(router.urls))
 
