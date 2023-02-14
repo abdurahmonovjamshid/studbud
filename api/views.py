@@ -14,7 +14,6 @@ class RoomMessages(APIView):
         pk = kwargs['pk']
         try:
             room = Room.objects.get(pk=pk)
-            print(room)
         except Room.DoesNotExist:
             room = None
         if not room:
