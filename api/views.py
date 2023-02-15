@@ -3,10 +3,16 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from base.models import Room, Topic, Message
-from .serializers import RoomSerializler, TopicSerializer, MessageSerializer
+from base.models import Room, Topic, Message, User
+from .serializers import RoomSerializler, TopicSerializer, MessageSerializer, RegisterSerializer
 from rest_framework import permissions
 from .permissions import RoomOwnerOrReadonly, MessageOwnerOrReadonly, IsAdminOrReadOnly
+
+
+class RegisterView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = RegisterSerializer
 
 
 class RoomMessages(APIView):

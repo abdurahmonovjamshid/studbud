@@ -10,6 +10,7 @@ router2 = routers.SimpleRouter()
 router2.register('topic', views.TopicViewSet)
 
 urlpatterns = [
+    path('user/', views.RegisterView.as_view(), name='auth_register'),
     path('room/', views.RoomListCreateView.as_view()),
     path('room/<int:pk>/', views.RoomDetailView.as_view()),
     path('room/<int:pk>/messages', views.RoomMessages.as_view()),
